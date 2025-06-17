@@ -1,0 +1,107 @@
+{
+  "view": {
+    "type": "view.list",
+    "items": [
+      {
+        "type": "layout.sidebar",
+        "minWidth": 400,
+        "content": {
+          "type": "view.list",
+          "size": "m",
+          "direction": "vertical",
+          "items": [
+            {
+              "type": "view.image",
+              "maxWidth": 350,
+              "url": {
+                "type": "data.input",
+                "path": "image_url"
+              }
+            }
+          ]
+        },
+        "controls": {
+          "type": "view.list",
+          "direction": "vertical",
+          "items": [
+            {
+              "type": "view.alert",
+              "theme": "info",
+              "label": "Поисковой запрос",
+              "content": {
+                "type": "view.text",
+                "content": {
+                  "type": "data.input",
+                  "path": "query"
+                }
+              }
+            },
+            {
+              "type": "view.action-button",
+              "label": "Найти запрос в Google",
+              "action": {
+                "type": "action.open-link",
+                "payload": {
+                  "type": "data.input",
+                  "path": "search_url"
+                }
+              }
+            },
+            {
+              "type": "view.divider"
+            },
+            {
+              "type": "field.radio-group",
+              "label": "Правильно выбрана картинка?",
+              "options": [
+                {
+                  "label": "Правильно",
+                  "value": "relevant"
+                },
+                {
+                  "label": "Не правильно",
+                  "value": "irrelevant"
+                }
+              ],
+              "data": {
+                "type": "data.output",
+                "path": "result"
+              },
+              "validation": {
+                "type": "condition.required"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "plugins": [
+    {
+      "type": "plugin.toloka",
+      "layout": {
+        "kind": "scroll",
+        "taskWidth": 600
+      }
+    },
+    {
+      "q": {
+        "type": "action.set",
+        "data": {
+          "type": "data.output",
+          "path": "result"
+        },
+        "payload": "relevant"
+      },
+      "w": {
+        "type": "action.set",
+        "data": {
+          "type": "data.output",
+          "path": "result"
+        },
+        "payload": "irrelevant"
+      },
+      "type": "plugin.hotkeys"
+    }
+  ]
+}
